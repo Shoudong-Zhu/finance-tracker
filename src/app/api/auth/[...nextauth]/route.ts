@@ -1,8 +1,11 @@
 // src/app/api/auth/[...nextauth]/route.ts
-import NextAuth from 'next-auth';
-import { authConfig } from '@/lib/auth';
+import { auth } from '@/app/auth';
+import { NextResponse } from 'next/server';
 
-const handler = NextAuth(authConfig);
+export async function GET(request: Request) {
+  return NextResponse.json(await auth());
+}
 
-export const GET = handler;
-export const POST = handler;
+export async function POST(request: Request) {
+  return NextResponse.json(await auth());
+}
