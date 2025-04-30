@@ -7,6 +7,7 @@
 // prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
+  output = "./node_modules/.prisma/client"
 }
 
 datasource db {
@@ -17,7 +18,7 @@ datasource db {
 model User {
   id            String    @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String    @unique
   emailVerified DateTime? // Needed by NextAuth Email provider
   image         String?   // Needed by NextAuth OAuth providers
   password      String?   // Custom field for Credentials provider
