@@ -23,6 +23,7 @@ model User {
   password      String?   // Custom field for Credentials provider
   accounts      Account[] // Needed by NextAuth OAuth providers
   sessions      Session[] // Needed by NextAuth database sessions
+  transactions Transaction[] // Relation to Transaction model
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -66,4 +67,23 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Transaction {
+  id          String          @id @default(cuid())
+  amount      Decimal         @db.Decimal(10, 2) // Example: Up to 10 digits, 2 decimal places
+  type        TransactionType // Enum INCOME or EXPENSE
+  date        DateTime
+  description String?
+  category    String          // Simple category string for now
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade) // Relation back to User
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
 }
