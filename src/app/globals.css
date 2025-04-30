@@ -5,6 +5,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
 
 @layer base {
@@ -24,4 +26,5 @@
 body {
   color: var(--foreground);
   background: var(--background);
+  font-family: var(--font-sans);
 }
