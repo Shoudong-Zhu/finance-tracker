@@ -1,5 +1,5 @@
 // src/app/dashboard/page.tsx
-import { auth } from '../auth';
+import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 
 export default async function DashboardPage() {
