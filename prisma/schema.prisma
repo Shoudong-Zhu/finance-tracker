@@ -13,6 +13,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  
 }
 
 model User {
@@ -25,13 +26,11 @@ model User {
   accounts      Account[] // Needed by NextAuth OAuth providers
   sessions      Session[] // Needed by NextAuth database sessions
   transactions Transaction[] // Relation to Transaction model
+  budgets      Budget[] // Add relation to Budget model
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Add relations to other models later
-  // transactions Transaction[]
-  // budgets      Budget[]
 }
 
 // Required models for NextAuth.js Prisma Adapter
@@ -87,4 +86,19 @@ model Transaction {
 enum TransactionType {
   INCOME
   EXPENSE
+}
+
+model Budget {
+  id        String  @id @default(cuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category  String  // Category name (matches transaction categories)
+  amount    Decimal @db.Decimal(10, 2) // The budgeted amount
+  month     Int     // Month (1-12)
+  year      Int     // Year (e.g., 2025)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Ensure a user can only have one budget per category per month/year
+  @@unique([userId, category, month, year])
 }
