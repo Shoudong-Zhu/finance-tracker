@@ -72,6 +72,7 @@ export async function createTransaction(
         date,
         category,
         description,
+        updatedAt: new Date()
       },
     });
 
