@@ -1,6 +1,6 @@
 // src/app/transactions/edit/[id]/page.tsx
 import { getTransactionById } from '@/actions/transactionActions'; // Adjust path
-import TransactionForm from '@/components/transactions/TransactionForm'; // Adjust path
+import TransactionForm from '../../../../components/transactions/TransactionForm'; // Adjust path
 import Link from 'next/link';
 
 interface EditTransactionPageProps {

@@ -1,7 +1,7 @@
 // src/app/transactions/page.tsx
 import Link from 'next/link';
 import { getTransactions } from '@/actions/transactionActions';
-import TransactionTable from '@/components/transactions/TransactionTable';
+import TransactionTable from '../../components/transactions/TransactionTable';
 
 export default async function TransactionsPage() {
   // Fetch transactions directly in this Server Component
