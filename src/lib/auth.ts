@@ -3,12 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import prisma from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
-import { createHash } from 'crypto';
-
-// Helper function to hash passwords
-function hashPassword(password: string): string {
-  return createHash('sha256').update(password).digest('hex');
-}
+import bcrypt from 'bcrypt';
 
 export const authConfig: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -26,7 +21,7 @@ export const authConfig: NextAuthOptions = {
         }
 
         const email = credentials.email as string;
-        const hashedPassword = hashPassword(credentials.password as string);
+        const password = credentials.password as string;
 
         const user = await prisma.user.findUnique({
           where: { email }
@@ -37,7 +32,7 @@ export const authConfig: NextAuthOptions = {
           return null;
         }
 
-        const isValidPassword = hashedPassword === user.password;
+        const isValidPassword = await bcrypt.compare(password, user.password);
 
         if (!isValidPassword) {
           console.error('Invalid password');
