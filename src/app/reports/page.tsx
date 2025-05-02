@@ -78,9 +78,10 @@ export default function ReportsPage() {
     setDetailedData([]); // Clear previous data
 
     const sDate = new Date(startDate);
+    // Add 1 day to endDate to include the whole day in the query
     const eDate = new Date(endDate);
-    // Set end date to end of day to include all transactions on that day
-    eDate.setHours(23, 59, 59, 999);
+    eDate.setDate(eDate.getDate() + 1);
+
 
     if (isNaN(sDate.getTime()) || isNaN(eDate.getTime()) || sDate >= eDate) {
         setError("Invalid date range selected.");
