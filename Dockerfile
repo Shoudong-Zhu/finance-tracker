@@ -40,6 +40,9 @@ FROM node:20-alpine AS runner
 # Use Alpine for smaller final image
 WORKDIR /app
 
+# Install required OpenSSL library
+RUN apk add --no-cache openssl
+
 ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
